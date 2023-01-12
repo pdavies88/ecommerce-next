@@ -9,11 +9,8 @@ module.exports = {
     'plugin:react/recommended',
     'standard-with-typescript'
   ],
-  overrides: [
-  ],
-  plugins: [
-    'react'
-  ],
+  overrides: [],
+  plugins: ['react'],
   rules: {
     eqeqeq: 'warn',
     'no-console': 'warn',
