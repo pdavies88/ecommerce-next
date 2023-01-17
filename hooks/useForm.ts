@@ -6,13 +6,11 @@ export default function useForm (initial: any) {
 
   function handleChange (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) {
     const { value, name, type } = e.target
-    if (type === 'number') {
-      parseInt(value)
-    }
+
     setInputs({
       // copy the existing state
       ...inputs,
-      [name]: value
+      [name]: type === 'number' ? parseInt(value) : value
     })
   }
 

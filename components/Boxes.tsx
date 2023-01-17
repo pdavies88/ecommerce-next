@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import Box from './Box'
 
-const GET_ALL_BOXES = gql`
+export const GET_ALL_BOXES = gql`
   query Query {
     getBoxes {
       _id
