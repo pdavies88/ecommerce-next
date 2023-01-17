@@ -20,7 +20,15 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off'
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/no-misused-promises': [
+      2,
+      {
+        checksVoidReturn: {
+          attributes: false
+        }
+      }
+    ]
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -28,5 +36,5 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json'
   },
-  ignorePatterns: ['**/*.js']
+  ignorePatterns: ['lib/*.tsx']
 }

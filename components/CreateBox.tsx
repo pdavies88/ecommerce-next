@@ -1,5 +1,8 @@
+import { useMutation } from '@apollo/client'
+import gql from 'graphql-tag'
 import { ChangeEvent } from 'react'
 import useForm from '../hooks/useForm'
+import { GET_ALL_BOXES } from './Boxes'
 
 interface FormProps {
   clearForm: () => void
@@ -16,6 +19,20 @@ interface FormProps {
   }
 }
 
+const CREATE_BOX_MUTATION = gql`
+  mutation Mutation($boxInput: BoxInput) {
+    createBox(boxInput: $boxInput) {
+      cost
+      description
+      image
+      inventory
+      name
+      _id
+      createdAt
+    }
+  }
+`
+
 export default function CreateProduct () {
   const { inputs, handleChange, clearForm, resetForm }: FormProps = useForm({
     name: '',
@@ -24,15 +41,29 @@ export default function CreateProduct () {
     inventory: 0,
     image: ''
   })
+  const [createBox, { loading, error, data }] = useMutation(
+    CREATE_BOX_MUTATION,
+    {
+      variables: {
+        boxInput: inputs
+      },
+      refetchQueries: [{ query: GET_ALL_BOXES }]
+    }
+  )
+
+  console.log(data)
+
   return (
     <form
-      onSubmit={e => {
+      onSubmit={async e => {
         e.preventDefault()
-        // eslint-disable-next-line no-console
-        console.log(inputs)
+        // Submit the inputfields to the backend:
+        await createBox()
+        clearForm()
       }}
     >
-      <fieldset>
+      {error != null && <div>You have received a Graphql error</div>}
+      <fieldset disabled={loading} aria-busy={loading}>
         <label htmlFor='name'>
           Name
           <input
