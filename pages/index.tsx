@@ -1,6 +1,7 @@
 import Head from 'next/head'
+import Boxes from '../components/Boxes'
+
 // import { Gluten } from '@next/font/google'
-import Header from '../components/Header'
 // const gluten = Gluten({ subsets: ['latin'] })
 
 export default function Home () {
@@ -12,8 +13,9 @@ export default function Home () {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <Header />
-      <main>Get started by editing&nbsp;</main>
+      <main>
+        <Boxes />
+      </main>
     </div>
   )
 }

@@ -8,9 +8,6 @@ export default function Header () {
       <div>
         <Link href='/'>Boosted Boxes</Link>
       </div>
-      <div>
-        <p>Search</p>
-      </div>
       <Nav />
     </header>
   )

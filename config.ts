@@ -1,4 +1,3 @@
 // Temp client side config
-export const endpoint = 'http://localhost:3000/api/graphql'
-export const prodEndpoint = 'fill me in when we deploy'
+export const graphqlEndpoint = 'http://localhost:4200'
 export const perPage = 4

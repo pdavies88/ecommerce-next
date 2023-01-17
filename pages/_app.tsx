@@ -5,6 +5,7 @@ import '../styles/globals.css'
 import 'nprogress/nprogress.css'
 import { ApolloProvider } from '@apollo/client'
 import withData from '../lib/withApollo'
+import Header from '../components/Header'
 
 Router.events.on('routeChangeStart', () => NProgress.start())
 Router.events.on('routeChangeComplete', () => NProgress.done())
@@ -17,6 +18,7 @@ type ApolloProps = AppProps & {
 function App ({ Component, pageProps, apollo }: ApolloProps) {
   return (
     <ApolloProvider client={apollo}>
+      <Header />
       <Component {...pageProps} />
     </ApolloProvider>
   )
