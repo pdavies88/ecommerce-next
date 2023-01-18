@@ -4,7 +4,7 @@ import { ChangeEvent } from 'react'
 import useForm from '../hooks/useForm'
 import { useRouter } from 'next/router'
 import { GET_ALL_BOXES } from './Boxes'
-import { Button } from 'react-bootstrap'
+import { Button, Container } from 'react-bootstrap'
 
 interface FormProps {
   clearForm: () => void
@@ -64,93 +64,110 @@ export default function EditBox ({ id }: Props) {
   if (loading) return <p>loading...</p>
 
   return (
-    <form
-      onSubmit={async e => {
-        e.preventDefault()
-        await editBox({
-          variables: {
-            id,
-            boxInput: {
-              name: inputs.name,
-              description: inputs.description,
-              inventory: inputs.inventory,
-              cost: inputs.cost,
-              image: inputs.image
-            }
-          },
-          refetchQueries: [{ query: GET_ALL_BOXES }]
-        })
-        const boxId: string = data.box._id
-        await router.push({
-          pathname: `/box/${boxId}`
-        })
-      }}
-    >
-      {error != null && (
-        <div>
-          You have received a Graphql error:{' '}
-          {error.graphQLErrors.map(({ message }, i) => (
-            <span key={i}>{message}</span>
-          ))}
-        </div>
-      )}
-      <fieldset disabled={updateLoading} aria-busy={updateLoading}>
-        <label htmlFor='name'>
-          Name
-          <input
-            type='text'
-            id='name'
-            name='name'
-            placeholder='Name'
-            value={inputs.name}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor='cost'>
-          Cost
-          <input
-            type='number'
-            id='cost'
-            name='cost'
-            placeholder='cost'
-            value={inputs.cost}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor='inventory'>
-          Inventory
-          <input
-            type='number'
-            id='inventory'
-            name='inventory'
-            placeholder='inventory'
-            value={inputs.inventory}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor='description'>
-          Description
-          <textarea
-            id='description'
-            name='description'
-            placeholder='Description'
-            value={inputs.description}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor='image'>
-          Image
-          <input
-            type='text'
-            id='image'
-            name='image'
-            placeholder='image'
-            value={inputs.image}
-            onChange={handleChange}
-          />
-        </label>
-        <Button type='submit'>Update Box</Button>
-      </fieldset>
-    </form>
+    <Container className='d-flex justify-content-center'>
+      <form
+        onSubmit={async e => {
+          e.preventDefault()
+          await editBox({
+            variables: {
+              id,
+              boxInput: {
+                name: inputs.name,
+                description: inputs.description,
+                inventory: inputs.inventory,
+                cost: inputs.cost,
+                image: inputs.image
+              }
+            },
+            refetchQueries: [{ query: GET_ALL_BOXES }]
+          })
+          const boxId: string = data.box._id
+          await router.push({
+            pathname: `/box/${boxId}`
+          })
+        }}
+      >
+        {error != null && (
+          <div>
+            You have received a Graphql error:{' '}
+            {error.graphQLErrors.map(({ message }, i) => (
+              <span key={i}>{message}</span>
+            ))}
+          </div>
+        )}
+        <fieldset disabled={updateLoading} aria-busy={updateLoading}>
+          <div className='mb-3'>
+            <label htmlFor='name' className='form-label'>
+              Name
+              <input
+                className='form-control'
+                type='text'
+                id='name'
+                name='name'
+                placeholder='Name'
+                value={inputs.name}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <div className='mb-3'>
+            <label htmlFor='cost' className='form-label'>
+              Cost
+              <input
+                className='form-control'
+                type='number'
+                id='cost'
+                name='cost'
+                placeholder='cost'
+                value={inputs.cost}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <div className='mb-3'>
+            <label htmlFor='inventory' className='form-label'>
+              Inventory
+              <input
+                className='form-control'
+                type='number'
+                id='inventory'
+                name='inventory'
+                placeholder='inventory'
+                value={inputs.inventory}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <div className='mb-3'>
+            <label htmlFor='description' className='form-label'>
+              Description
+              <textarea
+                className='form-control'
+                id='description'
+                name='description'
+                placeholder='Description'
+                value={inputs.description}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <div className='mb-3'>
+            <label htmlFor='image' className='form-label'>
+              Image
+              <input
+                className='form-control'
+                type='text'
+                id='image'
+                name='image'
+                placeholder='image'
+                value={inputs.image}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <Button type='submit'>Update Box</Button>
+        </fieldset>
+      </form>
+    </Container>
   )
 }
