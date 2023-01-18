@@ -1,5 +1,15 @@
-import React from 'react'
+import EditBox from '../components/EditBox'
 
-export default function Edit () {
-  return <div>Edit</div>
+interface QueryProps {
+  query: {
+    id: string
+  }
+}
+
+export default function EditPage ({ query }: QueryProps) {
+  return (
+    <div>
+      <EditBox id={query.id} />
+    </div>
+  )
 }

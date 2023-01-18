@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { formatCurrency } from '../utils/formatCurrency'
+import DeleteBox from './DeleteBox'
 
 interface BoxProps {
   box: {
@@ -18,11 +19,21 @@ export default function Box ({ box }: BoxProps) {
     <div>
       <img src={box?.image} alt={box.name} />
       <div>
-        <Link href={`/box/${box.name}`}>{box.name}</Link>
+        <Link href={`/box/${box._id}`}>{box.name}</Link>
       </div>
       <div>{formatCurrency(box.cost)}</div>
       <p>{box.description}</p>
-      {/* TODO: Add buttons to edit and delete item */}
+      <Link
+        href={{
+          pathname: 'edit',
+          query: {
+            id: box._id
+          }
+        }}
+      >
+        Click here to edit
+      </Link>
+      <DeleteBox id={box._id} />
     </div>
   )
 }
