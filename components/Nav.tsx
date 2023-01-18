@@ -13,7 +13,11 @@ export default function Nav () {
     <Navbar sticky='top' className='bg-white shadow-sm mb-3'>
       <Container>
         <nav className='me-auto'>
-          {session != null && <Link href='/create'>Create</Link>}
+          {session != null && (
+            <div className='d-inline-block pe-3 me-3 border-end border-dark'>
+              <Link href='/create'>Create</Link>
+            </div>
+          )}
           <Login />
         </nav>
         {cartQuantity > 0 && (

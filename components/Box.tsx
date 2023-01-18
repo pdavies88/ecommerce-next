@@ -41,7 +41,7 @@ export default function Box ({ box }: BoxProps) {
         alt={box.name}
       />
       <Card.Body className='d-flex flex-column'>
-        <Card.Title className='d-flex justify-content-between align-items-baseline mb-4'>
+        <Card.Title className='d-flex align-items-center mb-4 flex-column'>
           <Link className='fs-2' href={`/box/${box._id}`}>
             {box.name}
           </Link>
@@ -109,7 +109,9 @@ export default function Box ({ box }: BoxProps) {
                 }}
                 passHref
               >
-                <a className='link-light text-decoration-none'>Edit Box</a>
+                <a className='link-light text-decoration-none d-block'>
+                  Edit Box
+                </a>
               </Link>
             </Button>
             <DeleteBox id={box._id} />
