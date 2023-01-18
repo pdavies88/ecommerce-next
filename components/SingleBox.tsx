@@ -2,6 +2,7 @@ import React from 'react'
 import { useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import Head from 'next/head'
+import { formatCurrency } from '../utils/formatCurrency'
 
 export const GET_SINGLE_BOX = gql`
   query Query($id: ID!) {
@@ -38,6 +39,8 @@ export default function SingleBox ({ id }: Props) {
       <div>
         <h2>{box.name}</h2>
         <p>{box.description}</p>
+        <p>Cost: {formatCurrency(box.cost)}</p>
+        <p>Total Available: {box.inventory}</p>
       </div>
     </div>
   )

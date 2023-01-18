@@ -45,8 +45,10 @@ export default function Box ({ box }: BoxProps) {
           <Link className='fs-2' href={`/box/${box._id}`}>
             {box.name}
           </Link>
-          <span className='ms-2 text-muted'>{formatCurrency(box.cost)}</span>
-          <p>{box.description}</p>
+          <span className='ms-2 text-muted'>
+            Cost: {formatCurrency(box.cost)}
+          </span>
+          <p>Total available: {box.inventory}</p>
         </Card.Title>
         <div className='mt-auto my-2'>
           {quantity === 0 ? (
