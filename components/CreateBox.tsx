@@ -2,6 +2,7 @@ import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import { useRouter } from 'next/router'
 import { ChangeEvent } from 'react'
+import { Button } from 'react-bootstrap'
 import useForm from '../hooks/useForm'
 import { GET_ALL_BOXES } from './Boxes'
 
@@ -119,13 +120,13 @@ export default function CreateProduct () {
             onChange={handleChange}
           />
         </label>
-        <button type='button' onClick={clearForm}>
+        <Button type='button' onClick={clearForm}>
           Clear Form
-        </button>
-        <button type='button' onClick={resetForm}>
+        </Button>
+        <Button type='button' onClick={resetForm}>
           Reset Form
-        </button>
-        <button type='submit'>+ Add Box</button>
+        </Button>
+        <Button type='submit'>+ Add Box</Button>
       </fieldset>
     </form>
   )

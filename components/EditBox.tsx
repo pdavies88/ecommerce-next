@@ -4,6 +4,7 @@ import { ChangeEvent } from 'react'
 import useForm from '../hooks/useForm'
 import { useRouter } from 'next/router'
 import { GET_ALL_BOXES } from './Boxes'
+import { Button } from 'react-bootstrap'
 
 interface FormProps {
   clearForm: () => void
@@ -148,7 +149,7 @@ export default function EditBox ({ id }: Props) {
             onChange={handleChange}
           />
         </label>
-        <button type='submit'>Update Box</button>
+        <Button type='submit'>Update Box</Button>
       </fieldset>
     </form>
   )
