@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
+import { Col, Row } from 'react-bootstrap'
 import Box from './Box'
 
 export const GET_ALL_BOXES = gql`
@@ -31,12 +32,12 @@ export default function Boxes () {
   if (loading) return <p>Loading...</p>
   if (error != null) return <p>Error: {error.message}</p>
   return (
-    <div>
-      <div>
-        {data.getBoxes.map((box: BoxType) => (
-          <Box key={box._id} box={box} />
-        ))}
-      </div>
-    </div>
+    <Row xs={1} md={2} lg={3} className='g-3'>
+      {data.getBoxes.map((box: BoxType) => (
+        <Col key={box._id}>
+          <Box box={box} />
+        </Col>
+      ))}
+    </Row>
   )
 }

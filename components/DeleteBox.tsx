@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
+import { Button } from 'react-bootstrap'
 import { GET_ALL_BOXES } from './Boxes'
 
 const DELETE_BOX = gql`
@@ -24,7 +25,8 @@ export default function DeleteBox ({ id }: DeleteProps) {
         <div>You have received a Graphql error: {error.message}</div>
       )}
 
-      <button
+      <Button
+        className='my-2'
         type='button'
         disabled={loading}
         onClick={async e => {
@@ -35,8 +37,8 @@ export default function DeleteBox ({ id }: DeleteProps) {
           }
         }}
       >
-        Delete
-      </button>
+        Delete Box
+      </Button>
     </>
   )
 }

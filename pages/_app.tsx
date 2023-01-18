@@ -6,6 +6,8 @@ import 'nprogress/nprogress.css'
 import { ApolloProvider } from '@apollo/client'
 import Header from '../components/Header'
 import { useApollo } from '../lib/withApollo'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { ShoppingCartProvider } from '../context/ShoppingCartContext'
 
 Router.events.on('routeChangeStart', () => NProgress.start())
 Router.events.on('routeChangeComplete', () => NProgress.done())
@@ -16,8 +18,10 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <Header />
-      <Component {...pageProps} />
+      <ShoppingCartProvider>
+        <Header />
+        <Component {...pageProps} />
+      </ShoppingCartProvider>
     </ApolloProvider>
   )
 }

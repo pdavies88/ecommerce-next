@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { Container } from 'react-bootstrap'
 import Boxes from '../components/Boxes'
 
 export default function Home () {
@@ -11,7 +12,9 @@ export default function Home () {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main>
-        <Boxes />
+        <Container>
+          <Boxes />
+        </Container>
       </main>
     </div>
   )
