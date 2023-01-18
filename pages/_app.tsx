@@ -8,20 +8,27 @@ import Header from '../components/Header'
 import { useApollo } from '../lib/withApollo'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { ShoppingCartProvider } from '../context/ShoppingCartContext'
+import { SessionProvider } from 'next-auth/react'
 
 Router.events.on('routeChangeStart', () => NProgress.start())
 Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
 
-const App = ({ Component, pageProps }: AppProps) => {
+type CompleteProps = AppProps & {
+  session: any
+}
+
+const App = ({ Component, pageProps, session }: CompleteProps) => {
   const apolloClient = useApollo(pageProps)
 
   return (
     <ApolloProvider client={apolloClient}>
-      <ShoppingCartProvider>
-        <Header />
-        <Component {...pageProps} />
-      </ShoppingCartProvider>
+      <SessionProvider session={session}>
+        <ShoppingCartProvider>
+          <Header />
+          <Component {...pageProps} />
+        </ShoppingCartProvider>
+      </SessionProvider>
     </ApolloProvider>
   )
 }

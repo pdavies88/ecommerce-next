@@ -37,5 +37,5 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json'
   },
-  ignorePatterns: ['lib/*.tsx']
+  ignorePatterns: ['lib/*.tsx', 'pages/api/auth/*']
 }
