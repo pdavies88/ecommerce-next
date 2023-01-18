@@ -1,6 +1,6 @@
 import NProgress from 'nprogress'
 import Router from 'next/router'
-import type { AppProps } from 'next/app'
+import type { AppContext, AppProps } from 'next/app'
 import '../styles/globals.css'
 import 'nprogress/nprogress.css'
 import { ApolloProvider } from '@apollo/client'
@@ -20,6 +20,17 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Component {...pageProps} />
     </ApolloProvider>
   )
+}
+
+// Set up a global routing context
+App.getInitialProps = async function ({ Component, ctx }: AppContext) {
+  let pageProps: any = {}
+  if (Component.getInitialProps != null) {
+    pageProps = await Component.getInitialProps(ctx)
+  }
+
+  pageProps.query = ctx.query
+  return { pageProps }
 }
 
 export default App

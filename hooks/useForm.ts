@@ -1,8 +1,15 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 export default function useForm (initial: any) {
   // create a state object for our inputs
   const [inputs, setInputs] = useState(initial)
+  // Setting a different value to prevent an infinite loop
+  const initialValues = Object.values(initial).join('')
+
+  useEffect(() => {
+    // This function runs when the things we are watching change
+    setInputs(initial)
+  }, [initialValues])
 
   function handleChange (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) {
     const { value, name, type } = e.target

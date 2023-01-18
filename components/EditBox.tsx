@@ -1,8 +1,8 @@
-import { useMutation } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
-import { useRouter } from 'next/router'
 import { ChangeEvent } from 'react'
 import useForm from '../hooks/useForm'
+import { useRouter } from 'next/router'
 import { GET_ALL_BOXES } from './Boxes'
 
 interface FormProps {
@@ -20,51 +20,80 @@ interface FormProps {
   }
 }
 
-const CREATE_BOX_MUTATION = gql`
-  mutation Mutation($boxInput: BoxInput) {
-    createBox(boxInput: $boxInput) {
+export const GET_SINGLE_BOX = gql`
+  query Query($id: ID!) {
+    box(ID: $id) {
+      _id
       cost
+      createdAt
       description
       image
       inventory
       name
-      _id
-      createdAt
     }
   }
 `
 
-export default function CreateProduct () {
+const UPDATE_SINGLE_BOX = gql`
+  mutation Mutation($id: ID!, $boxInput: BoxInput) {
+    editBox(ID: $id, boxInput: $boxInput)
+  }
+`
+interface Props {
+  id: string
+}
+
+export default function EditBox ({ id }: Props) {
   const router = useRouter()
 
-  const { inputs, handleChange, clearForm, resetForm }: FormProps = useForm({
-    name: '',
-    cost: 0,
-    description: '',
-    inventory: 0,
-    image: ''
+  const { data, error, loading } = useQuery(GET_SINGLE_BOX, {
+    variables: { id }
   })
-  const [createBox, { loading, error }] = useMutation(CREATE_BOX_MUTATION, {
-    variables: {
-      boxInput: inputs
-    },
-    refetchQueries: [{ query: GET_ALL_BOXES }]
+
+  const [editBox, { loading: updateLoading }] = useMutation(UPDATE_SINGLE_BOX)
+
+  const { inputs, handleChange }: FormProps = useForm({
+    name: data?.box?.name,
+    cost: data?.box?.cost,
+    description: data?.box?.description,
+    inventory: data?.box?.inventory,
+    image: data?.box?.image
   })
+
+  if (loading) return <p>loading...</p>
 
   return (
     <form
       onSubmit={async e => {
         e.preventDefault()
-        // Submit the inputfields to the backend:
-        await createBox()
-        clearForm()
-        await router.push('/')
+        await editBox({
+          variables: {
+            id,
+            boxInput: {
+              name: inputs.name,
+              description: inputs.description,
+              inventory: inputs.inventory,
+              cost: inputs.cost,
+              image: inputs.image
+            }
+          },
+          refetchQueries: [{ query: GET_ALL_BOXES }]
+        })
+        const boxId: string = data.box._id
+        await router.push({
+          pathname: `/box/${boxId}`
+        })
       }}
     >
       {error != null && (
-        <div>You have received a Graphql error: {error.message}</div>
+        <div>
+          You have received a Graphql error:{' '}
+          {error.graphQLErrors.map(({ message }, i) => (
+            <span key={i}>{message}</span>
+          ))}
+        </div>
       )}
-      <fieldset disabled={loading} aria-busy={loading}>
+      <fieldset disabled={updateLoading} aria-busy={updateLoading}>
         <label htmlFor='name'>
           Name
           <input
@@ -119,13 +148,7 @@ export default function CreateProduct () {
             onChange={handleChange}
           />
         </label>
-        <button type='button' onClick={clearForm}>
-          Clear Form
-        </button>
-        <button type='button' onClick={resetForm}>
-          Reset Form
-        </button>
-        <button type='submit'>+ Add Box</button>
+        <button type='submit'>Update Box</button>
       </fieldset>
     </form>
   )

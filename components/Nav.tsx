@@ -5,7 +5,6 @@ export default function Nav () {
   return (
     <nav>
       <Link href='/create'>Create</Link>
-      <Link href='/edit'>Edit</Link>
     </nav>
   )
 }
