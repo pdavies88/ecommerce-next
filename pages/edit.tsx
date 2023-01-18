@@ -1,4 +1,5 @@
 import EditBox from '../components/EditBox'
+import { useSession } from 'next-auth/react'
 
 interface QueryProps {
   query: {
@@ -7,9 +8,14 @@ interface QueryProps {
 }
 
 export default function EditPage ({ query }: QueryProps) {
-  return (
-    <div>
-      <EditBox id={query.id} />
-    </div>
-  )
+  const { data: session } = useSession()
+  if (session != null) {
+    return (
+      <div>
+        <EditBox id={query.id} />
+      </div>
+    )
+  } else {
+    return null
+  }
 }

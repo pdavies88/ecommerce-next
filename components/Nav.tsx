@@ -2,15 +2,19 @@ import Link from 'next/link'
 import React from 'react'
 import { useShoppingCart } from '../context/ShoppingCartContext'
 import { Button, Container, Navbar } from 'react-bootstrap'
+import Login from './Login'
+import { useSession } from 'next-auth/react'
 
 export default function Nav () {
   const { openCart, cartQuantity } = useShoppingCart()
+  const { data: session } = useSession()
 
   return (
     <Navbar sticky='top' className='bg-white shadow-sm mb-3'>
       <Container>
         <nav className='me-auto'>
-          <Link href='/create'>Create</Link>
+          {session != null && <Link href='/create'>Create</Link>}
+          <Login />
         </nav>
         {cartQuantity > 0 && (
           <Button
